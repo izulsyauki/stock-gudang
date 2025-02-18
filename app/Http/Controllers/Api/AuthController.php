@@ -12,7 +12,7 @@ class AuthController extends Controller
 {
     public function login(Request $request): JsonResponse
     {
-        $request->validate([
+        $credentials = $request->validate([
             'email' => 'required|email|max:255',
             'password' => 'required|string|min:8|max:255',
         ]);
@@ -25,7 +25,7 @@ class AuthController extends Controller
             ], 401);
         }
 
-        $token = $user->createToken($user->name.'Auth-Token')->plainTextToken;
+        $token = $user->createToken($user->name . 'Auth-Token')->plainTextToken;
 
         return response()->json([
             'message' => 'Login successfully.',
@@ -49,7 +49,7 @@ class AuthController extends Controller
         ]);
 
         if ($user) {
-            $token = $user->createToken($user->name.'Auth-Token')->plainTextToken;
+            $token = $user->createToken($user->name . 'Auth-Token')->plainTextToken;
 
             return response()->json([
                 'message' => 'Registration successfully.',
@@ -60,6 +60,36 @@ class AuthController extends Controller
             return response()->json([
                 'message' => 'Registration failed.'
             ], 400);
+        }
+    }
+
+    public function profile(Request $request): JsonResponse
+    {
+        if ($request->user()) {
+            return response()->json([
+                'message' => 'Profile fetched.',
+                'data' => $request->user(),
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Not authenticated.'
+            ], 401);
+        }
+    }
+
+    public function logout(Request $request): JsonResponse
+    {
+        $user = User::where('id', $request->user()->id)->first();
+
+        if ($user) {
+            $user->tokens()->delete();
+            return response()->json([
+                'message' => 'Logout successfully.'
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'User not found.'
+            ], 404);
         }
     }
 }
