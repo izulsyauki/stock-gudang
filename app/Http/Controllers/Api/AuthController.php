@@ -25,7 +25,7 @@ class AuthController extends Controller
             ], 401);
         }
 
-        $token = $user->createToken($user->name, 'Auth-Token')->plainTextToken;
+        $token = $user->createToken($user->name.'Auth-Token')->plainTextToken;
 
         return response()->json([
             'message' => 'Login successfully.',
@@ -49,7 +49,7 @@ class AuthController extends Controller
         ]);
 
         if ($user) {
-            $token = $user->createToken($user->name, 'Auth-Token')->plainTextToken;
+            $token = $user->createToken($user->name.'Auth-Token')->plainTextToken;
 
             return response()->json([
                 'message' => 'Registration successfully.',
