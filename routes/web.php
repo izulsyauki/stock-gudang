@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\CustomerController;
-use App\Http\Controllers\Api\ProductController;
-use App\Http\Controllers\Api\PurchaseController;
-use App\Http\Controllers\Api\StockTransactionController;
-use App\Http\Controllers\Api\SupplierController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\StockTransactionController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
