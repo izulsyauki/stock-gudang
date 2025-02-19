@@ -37,18 +37,19 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
         Route::put('/supplier/{supplier}', [SupplierController::class, 'update'])->name('supplier.update');
         Route::delete('/supplier/{supplier}', [SupplierController::class, 'destroy'])->name('supplier.destroy');
 
-        Route::get('/transaction/add', [StockTransactionController::class, 'create'])->name('admin.add.transaction');
+        Route::get('/transaction/add', [StockTransactionController::class, 'create'])->name('transaction.create');
         Route::post('/transaction', [StockTransactionController::class, 'store'])->name('transaction.store');
         Route::get('/transaction/{transaction}/edit', [StockTransactionController::class, 'edit'])->name('transaction.edit');
         Route::put('/transaction/{transaction}', [StockTransactionController::class, 'update'])->name('transaction.update');
         Route::delete('/transaction/{transaction}', [StockTransactionController::class, 'destroy'])->name('transaction.destroy');
 
-        Route::get('/purchases/add', [PurchaseController::class, 'create'])->name('admin.add.purchases');
+        Route::get('/purchases/add', [PurchaseController::class, 'create'])->name('purchases.create');
         Route::post('/purchases', [PurchaseController::class, 'store'])->name('purchases.store');
         Route::get('/purchases/{purchase}/edit', [PurchaseController::class, 'edit'])->name('purchases.edit');
         Route::put('/purchases/{purchase}', [PurchaseController::class, 'update'])->name('purchases.update');
         Route::delete('/purchases/{purchase}', [PurchaseController::class, 'destroy'])->name('purchases.destroy');
 
+        Route::get('/customers/add', [CustomerController::class, 'create'])->name('customers.create');
         Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');
         Route::get('/customers/{customer}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
         Route::put('/customers/{customer}', [CustomerController::class, 'update'])->name('customers.update');
