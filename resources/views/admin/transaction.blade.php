@@ -38,7 +38,13 @@
                         <tr>
                             <td>{{ $transaction->id }}</td>
                             <td>{{ $transaction->product->name }}</td>
-                            <td>{{ ucfirst($transaction->transaction_type) }}</td>
+                            <td>
+                                @if ($transaction->transaction_type == 'in')
+                                    <span class="badge bg-success">In</span>
+                                @else
+                                    <span class="badge bg-danger">Out</span>
+                                @endif
+                            </td>
                             <td>{{ $transaction->quantity }}</td>
                             <td>{{ $transaction->supplier->name ?? 'N/A' }}</td>
                             <td>{{ $transaction->customer->name ?? 'N/A' }}</td>
