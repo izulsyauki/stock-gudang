@@ -4,107 +4,71 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
-use App\Models\Product;
+use App\Services\ProductService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
+    protected $productService;
+
+    public function __construct(ProductService $productService)
+    {
+        $this->productService = $productService;
+    }
+
     public function index()
     {
-
-        $products = Product::get();
+        $products = $this->productService->getAllProducts();
         if ($products->count() > 0) {
             $products = ProductResource::collection($products);
         }
-        // else {
-        //     return response()->json([
-        //         'message' => 'No Record Available'
-        //     ], 200);
-        // }
 
         return view('admin.products', compact('products'));
     }
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'description' => 'nullable',
-            'price' => 'required|numeric',
-            'stock' => 'required|integer',
-        ]);
+        $result = $this->productService->createProduct($request->all());
 
-        if ($validator->fails()) {
+        if (isset($result['errors'])) {
             return response()->json([
                 'message' => "All fields are required",
-                'error' => $validator->errors()
+                'error' => $result['errors']
             ], 422);
         }
-
-        $product = Product::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'price' => $request->price,
-            'stock' => $request->stock,
-        ]);
-
-        // return response()->json([
-        //     'message' => 'Product Created Successfully',
-        //     'data' => new ProductResource($product)
-        // ], 200);
 
         return redirect('/admin/products');
     }
 
-    public function show(Product $product)
+    public function show($id)
     {
+        $product = $this->productService->getProductById($id);
         return new ProductResource($product);
     }
 
-    public function edit(Product $product)
+    public function edit($id)
     {
+        $product = $this->productService->getProductById($id);
         return view('admin.edit.products', compact('product'));
     }
 
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'description' => 'nullable',
-            'price' => 'required|numeric',
-            'stock' => 'required|integer',
-        ]);
+        $result = $this->productService->updateProduct($id, $request->all());
 
-        if ($validator->fails()) {
+        if (isset($result['errors'])) {
             return response()->json([
                 'message' => "All fields are required",
-                'error' => $validator->errors()
+                'error' => $result['errors']
             ], 422);
         }
-
-        $product->update([
-            'name' => $request->name,
-            'description' => $request->description,
-            'price' => $request->price,
-            'stock' => $request->stock,
-        ]);
-
-        // return response()->json([
-        //     'message' => 'Product Updated Successfully',
-        //     'data' => new ProductResource($product)
-        // ], 200);
 
         return redirect('/admin/products')->with('success', 'Product Updated Successfully');
     }
 
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        $product->delete();
-        // return response()->json([
-        //     'message' => 'Product Deleted Successfully'
-        // ], 200);
-
+        $this->productService->deleteProduct($id);
         return redirect('/admin/products');
     }
 }
