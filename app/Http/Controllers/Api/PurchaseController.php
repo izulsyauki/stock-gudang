@@ -71,6 +71,8 @@ class PurchaseController extends Controller
     {
         $purchase->delete();
 
+        
+
         // return response()->json([
         //     'message' => 'Purchase Deleted Successfully'
         // ], 200);

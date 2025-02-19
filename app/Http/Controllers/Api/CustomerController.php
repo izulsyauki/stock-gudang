@@ -56,7 +56,7 @@ class CustomerController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'sometimes|string|max:255',
-            'email' => 'sometimes|email|unique:customers,email,' . $customer->id,
+            'email' => 'sometimes|email|unique:customer,email,' . $customer->id,
             'phone' => 'sometimes|string|max:20',
             'address' => 'nullable|string',
         ]);

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\PurchaseController;
 use App\Http\Controllers\Api\StockTransactionController;
@@ -50,4 +51,6 @@ Route::prefix('admin')->group(function () {
     Route::get('/customers', function () {
         return view('admin.customers');
     })->name('admin.customers');
+
+    Route::resource('/customers', CustomerController::class);
 });

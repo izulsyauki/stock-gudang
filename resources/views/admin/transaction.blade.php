@@ -10,7 +10,7 @@
         </div>
     </nav>
     <div class="container">
-        <a href="{{ route('admin.add.transaction') }}" class="btn btn-primary mb-3">Add New Transaction</a>
+        <a href="{{ route('transaction.create') }}" class="btn btn-primary mb-3">Add New Transaction</a>
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -20,22 +20,19 @@
                     <th>Quantity</th>
                     <th>Supplier</th>
                     <th>Customer</th>
-                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Product A</td>
-                    <td>In</td>
-                    <td>20</td>
-                    <td>PT. Sukses Jaya</td>
-                    <td>John Doe</td>
-                    <td>
-                        <button class="btn btn-sm btn-warning">Edit</button>
-                        <button class="btn btn-sm btn-danger">Delete</button>
-                    </td>
-                </tr>
+                @foreach ($transactions as $transaction)
+                    <tr>
+                        <td>{{ $transaction->id }}</td>
+                        <td>{{ $transaction->product->name }}</td>
+                        <td>{{ ucfirst($transaction->transaction_type) }}</td>
+                        <td>{{ $transaction->quantity }}</td>
+                        <td>{{ $transaction->supplier->name ?? 'N/A' }}</td>
+                        <td>{{ $transaction->customer->name ?? 'N/A' }}</td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

@@ -3,7 +3,7 @@
 @section('content')
     <div class="container mt-4">
         <h2>Add Stock Transaction</h2>
-        <form action="#" method="POST">
+        <form action="{{ route('transaction.store') }}" method="POST">
             @csrf
             <div class="mb-3">
                 <label for="product_id" class="form-label">Product</label>

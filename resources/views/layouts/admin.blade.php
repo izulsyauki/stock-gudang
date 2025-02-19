@@ -129,7 +129,8 @@
                 class="fas fa-truck me-2"></i> Supplier</a>
         <a href="{{ route('purchases.index') }}" class="{{ request()->routeIs('purchases.index*') ? 'active' : '' }}"><i
                 class="fas fa-shopping-cart me-2"></i> Purchases</a>
-        <a href="{{ route('admin.transaction') }}" class="{{ request()->routeIs('admin.stock*') ? 'active' : '' }}"><i
+        <a href="{{ route('transaction.index') }}"
+            class="{{ request()->routeIs('transaction.index*') ? 'active' : '' }}"><i
                 class="fas fa-exchange-alt me-2"></i> Stock Transaction</a>
         <a href="{{ route('admin.customers') }}"
             class="{{ request()->routeIs('admin.customers*') ? 'active' : '' }}"><i class="fas fa-users me-2"></i>
