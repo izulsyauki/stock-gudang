@@ -29,7 +29,7 @@
                         <td>{{ $product->stock }}</td>
                         <td>Rp. {{ $product->price }}</td>
                         <td>
-                            <a href="{{ route('products.update', $product->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning btn-sm">Edit</a>
                             <form action="{{ route('products.destroy', $product->id) }}" method="POST"
                                 style="display:inline-block;"
                                 onsubmit="return confirm('Are you sure you want to delete this product?');">

@@ -13,14 +13,17 @@ class SupplierController extends Controller
 {
     public function index()
     {
-        $supplier = Supplier::get();
-        if ($supplier->count() > 0) {
-            return SupplierResource::collection($supplier);
-        } else {
-            return response()->json([
-                'message' => 'No Record Available'
-            ], 200);
+        $suppliers = Supplier::get();
+        if ($suppliers->count() > 0) {
+            $suppliers = SupplierResource::collection($suppliers);
         }
+        // else {
+        //     return response()->json([
+        //         'message' => 'No Record Available'
+        //     ], 200);
+        // }
+
+        return view('admin.supplier', compact('suppliers'));
     }
 
     public function store(Request $request)
@@ -39,6 +42,8 @@ class SupplierController extends Controller
             ], 422);
         }
 
+        dd($request->all());
+
         $supplier = Supplier::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -46,15 +51,22 @@ class SupplierController extends Controller
             'address' => $request->address,
         ]);
 
-        return response()->json([
-            'message' => 'Supplier Created Successfully',
-            'data' => new SupplierResource($supplier)
-        ], 200);
+        // return response()->json([
+        //     'message' => 'Supplier Created Successfully',
+        //     'data' => new SupplierResource($supplier)
+        // ], 200);
+
+        return redirect('/admin/supplier');
     }
 
     public function show(Supplier $supplier)
     {
         return new SupplierResource($supplier);;
+    }
+
+    public function edit(Supplier $supplier)
+    {
+        return view('admin.edit.supplier', compact('supplier'));
     }
 
     public function update(Request $request, Supplier $supplier)
@@ -81,17 +93,21 @@ class SupplierController extends Controller
             'address' => $request->address,
         ]);
 
-        return response()->json([
-            'message' => 'Supplier Updated Successfully',
-            'data' => new SupplierResource($supplier)
-        ], 200);
+        // return response()->json([
+        //     'message' => 'Supplier Updated Successfully',
+        //     'data' => new SupplierResource($supplier)
+        // ], 200);
+
+        return redirect('/admin/supplier')->with('success', 'Supplier Updated Successfully');
     }
 
     public function destroy(Supplier $supplier)
     {
         $supplier->delete();
-        return response()->json([
-            'message' => 'Product Deleted Successfully'
-        ], 200);
+        // return response()->json([
+        //     'message' => 'Product Deleted Successfully'
+        // ], 200);
+
+        return redirect('/admin/supplier')->with('success', 'Supplier Deleted Successfully');
     }
 }

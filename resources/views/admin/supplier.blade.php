@@ -21,15 +21,22 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>PT. Sukses Jaya</td>
-                    <td>+62 8123456789</td>
-                    <td>
-                        <button class="btn btn-warning btn-sm">Edit</button>
-                        <button class="btn btn-danger btn-sm">Delete</button>
-                    </td>
-                </tr>
+                @foreach($suppliers as $supplier)
+                    <tr>
+                        <td>{{ $supplier->id }}</td>
+                        <td>{{ $supplier->name }}</td>
+                        <td>{{ $supplier->phone }}</td>
+                        <td>
+                            <a href="{{ route('supplier.edit', $supplier->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <form action="{{ route('supplier.destroy', $supplier->id) }}" method="POST" style="display:inline-block;"
+                                onsubmit="return confirm('Are you sure you want to delete this supplier?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

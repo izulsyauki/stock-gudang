@@ -125,9 +125,9 @@
         </a>
         <a href="{{ route('products.index') }}" class="{{ request()->routeIs('products.index*') ? 'active' : '' }}"><i
                 class="fas fa-box me-2"></i> Products</a>
-        <a href="{{ route('admin.supplier') }}" class="{{ request()->routeIs('admin.supplier*') ? 'active' : '' }}"><i
+        <a href="{{ route('supplier.index') }}" class="{{ request()->routeIs('supplier.index*') ? 'active' : '' }}"><i
                 class="fas fa-truck me-2"></i> Supplier</a>
-        <a href="{{ route('admin.purchases') }}" class="{{ request()->routeIs('admin.purchases*') ? 'active' : '' }}"><i
+        <a href="{{ route('purchases.index') }}" class="{{ request()->routeIs('purchases.index*') ? 'active' : '' }}"><i
                 class="fas fa-shopping-cart me-2"></i> Purchases</a>
         <a href="{{ route('admin.transaction') }}" class="{{ request()->routeIs('admin.stock*') ? 'active' : '' }}"><i
                 class="fas fa-exchange-alt me-2"></i> Stock Transaction</a>

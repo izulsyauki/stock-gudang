@@ -10,7 +10,7 @@
         </div>
     </nav>
     <div class="container">
-        <a href="{{ route('admin.add.products') }}" class="btn btn-primary mb-3">Add New Purchase</a>
+        <a href="{{ route('purchases.create') }}" class="btn btn-primary mb-3">Add New Purchase</a>
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -23,17 +23,28 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>PT. Sukses Jaya</td>
-                    <td>Product A</td>
-                    <td>10</td>
-                    <td>$500</td>
-                    <td>
-                        <button class="btn btn-sm btn-warning">Edit</button>
-                        <button class="btn btn-sm btn-danger">Delete</button>
-                    </td>
-                </tr>
+                @forelse($purchases as $purchase)
+                    <tr>
+                        <td>{{ $purchase->id }}</td>
+                        <td>{{ $purchase->supplier->name }}</td>
+                        <td>{{ $purchase->product->name }}</td>
+                        <td>{{ $purchase->quantity }}</td>
+                        <td>Rp. {{ $purchase->total_price }}</td>
+                        <td>
+                            <form action="{{ route('purchases.destroy', $purchase->id) }}" method="POST"
+                                style="display:inline-block;"
+                                onsubmit="return confirm('Are you sure you want to delete this purchased product?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="6" class="text-center">No purchases found</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
     </div>

@@ -9,6 +9,8 @@ class Purchase extends Model
 {
     use HasFactory;
 
+    protected $table = 'purchase';
+
     protected $fillable = ['supplier_id', 'product_id', 'quantity', 'total_price'];
 
     public function supplier()
