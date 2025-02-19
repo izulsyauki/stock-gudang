@@ -9,15 +9,18 @@ class Customer extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'product_id', 'quantity', 'total_price', 'status'];
+    protected $fillable = [
+        'name',
+        'email',
+        'phone',
+        'address',
+    ];
 
-    public function user()
+    /**
+     * Relasi ke StockTransaction (untuk transaksi keluar)
+     */
+    public function stockTransactions()
     {
-        return $this->belongsTo(User::class);
-    }
-
-    public function product()
-    {
-        return $this->belongsTo(Product::class);
+        return $this->hasMany(StockTransaction::class);
     }
 }

@@ -13,11 +13,10 @@ return new class extends Migration
     {
         Schema::create('customer', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('user')->onDelete('cascade');
-            $table->foreignId('product_id')->constrained('product')->onDelete('cascade');
-            $table->integer('quantity');
-            $table->decimal('total_price', 10, 2);
-            $table->enum('status', ['pending', 'completed', 'canceled'])->default('pending');
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->string('phone');
+            $table->text('address')->nullable();
             $table->timestamps();
         });
     }
