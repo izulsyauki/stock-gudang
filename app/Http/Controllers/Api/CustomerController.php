@@ -4,51 +4,46 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CustomerResource;
-use App\Models\Customer;
+use App\Services\CustomerService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class CustomerController extends Controller
 {
+    protected $customerService;
+
+    public function __construct(CustomerService $customerService)
+    {
+        $this->customerService = $customerService;
+    }
+
     public function index()
     {
-        $customers = Customer::latest()->get();
+        $customers = $this->customerService->getAllCustomers();
 
         if ($customers->count() > 0) {
             $customers = CustomerResource::collection($customers);
         }
-        // else {
-        //     return response()->json([
-        //         'message' => 'No Record Available'
-        //     ], 200);
-        // }
 
         return view('admin.customers', compact('customers'));
     }
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:customer,email',
-            'phone' => 'required|string|max:20',
-            'address' => 'nullable|string',
-        ]);
+        $result = $this->customerService->createCustomer($request->all());
 
-        if ($validator->fails()) {
+        if (isset($result['errors'])) {
             return response()->json([
                 'message' => 'Validation Error',
-                'errors' => $validator->errors()
+                'errors' => $result['errors']
             ], 422);
         }
-
-        Customer::create($request->all());
 
         return redirect('/admin/customers')->with('success', 'Customer Created Successfully');
     }
 
-    public function show(Customer $customer)
+    public function show($id)
     {
+        $customer = $this->customerService->getCustomerById($id);
         return new CustomerResource($customer);
     }
 
@@ -57,36 +52,29 @@ class CustomerController extends Controller
         return view('admin.add.customers');
     }
 
-    public function edit(Customer $customer)
+    public function edit($id)
     {
-        return view('admin.edit.customers',  compact('customer'));
+        $customer = $this->customerService->getCustomerById($id);
+        return view('admin.edit.customers', compact('customer'));
     }
 
-    public function update(Request $request, Customer $customer)
+    public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'sometimes|string|max:255',
-            'email' => 'sometimes|email|unique:customer,email,' . $customer->id,
-            'phone' => 'sometimes|string|max:20',
-            'address' => 'nullable|string',
-        ]);
+        $result = $this->customerService->updateCustomer($id, $request->all());
 
-        if ($validator->fails()) {
+        if (isset($result['errors'])) {
             return response()->json([
                 'message' => 'Validation Error',
-                'errors' => $validator->errors()
+                'errors' => $result['errors']
             ], 422);
         }
-
-        $customer->update($request->all());
 
         return redirect('/admin/customers')->with('success', 'Customer Updated Successfully');
     }
 
-    public function destroy(Customer $customer)
+    public function destroy($id)
     {
-        $customer->delete();
-
+        $this->customerService->deleteCustomer($id);
         return redirect('/admin/customers')->with('success', 'Customer Deleted Successfully');
     }
 }
