@@ -30,7 +30,7 @@ class CustomerController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:customers,email',
+            'email' => 'required|email|unique:customer,email',
             'phone' => 'required|string|max:20',
             'address' => 'nullable|string',
         ]);
@@ -44,15 +44,22 @@ class CustomerController extends Controller
 
         $customer = Customer::create($request->all());
 
-        return response()->json([
-            'message' => 'Customer Created Successfully',
-            'data' => new CustomerResource($customer)
-        ], 201);
+        // return response()->json([
+        //     'message' => 'Customer Created Successfully',
+        //     'data' => new CustomerResource($customer)
+        // ], 201);
+
+        return redirect('/admin/customers')->with('success', 'Customer Created Successfully');
     }
 
     public function show(Customer $customer)
     {
         return new CustomerResource($customer);
+    }
+
+    public function create()
+    {
+        return view('admin.add.customers');
     }
 
     public function update(Request $request, Customer $customer)

@@ -10,7 +10,7 @@
         </div>
     </nav>
     <div class="container">
-        <a href="{{ route('admin.add.customers') }}" class="btn btn-primary mb-3">Add New Customer</a>
+        <a href="{{ route('customers.create') }}" class="btn btn-primary mb-3">Add New Customer</a>
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -23,7 +23,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($customers as $customer)
+                @foreach ($customers as $customer)
                     <tr>
                         <td>{{ $customer->id }}</td>
                         <td>{{ $customer->name }}</td>

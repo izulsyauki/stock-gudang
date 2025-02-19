@@ -111,14 +111,17 @@
             position: absolute;
             bottom: 0;
             width: 100%;
-            padding: 1rem;
+            padding: 1rem 0px;
+            margin: 0;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .user-email {
             color: white;
             font-size: 0.9rem;
+            padding: 1rem;
             margin-bottom: 1rem;
+            width: 100%;
             word-break: break-all;
         }
 
@@ -128,7 +131,7 @@
             background: none;
             border: none;
             color: inherit;
-            padding: 10px;
+            padding: 10px 20px;
             cursor: pointer;
         }
 
@@ -171,7 +174,7 @@
                 <i class="fas fa-user me-2"></i>
                 {{ Auth::user()->email }}
             </div>
-            <form method="POST" action="{{ route('logout') }}">
+            <form method="POST" action="{{ route('logout') }}" style="display: inline-block; width: 100%;">
                 @csrf
                 <button type="submit" class="logout-btn">
                     <i class="fas fa-sign-out-alt me-2"></i> Logout
