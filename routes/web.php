@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -42,14 +43,12 @@ Route::prefix('admin')->group(function () {
     Route::get('/purchases/add', function () {
         return view('admin.add.purchases');
     })->name('admin.add.purchases');
-
-    Route::get('/products', function () {
-        return view('admin.products');
-    })->name('admin.products');
-
+    
     Route::get('/products/add', function () {
         return view('admin.add.products');
     })->name('admin.add.products');
+
+    Route::resource('/products', ProductController::class);
 
     Route::get('/customers', function () {
         return view('admin.customers');

@@ -123,7 +123,7 @@
         <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard*') ? 'active' : '' }}">
             <i class="fas fa-tachometer-alt me-2"></i> Dashboard
         </a>
-        <a href="{{ route('admin.products') }}" class="{{ request()->routeIs('admin.products*') ? 'active' : '' }}"><i
+        <a href="{{ route('products.index') }}" class="{{ request()->routeIs('products.index*') ? 'active' : '' }}"><i
                 class="fas fa-box me-2"></i> Products</a>
         <a href="{{ route('admin.supplier') }}" class="{{ request()->routeIs('admin.supplier*') ? 'active' : '' }}"><i
                 class="fas fa-truck me-2"></i> Supplier</a>

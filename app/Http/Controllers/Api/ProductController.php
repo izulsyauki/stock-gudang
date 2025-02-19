@@ -12,14 +12,18 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $product = Product::get();
-        if ($product->count() > 0) {
-            return ProductResource::collection($product);
-        } else {
-            return response()->json([
-                'message' => 'No Record Available'
-            ], 200);
+
+        $products = Product::get();
+        if ($products->count() > 0) {
+            $products = ProductResource::collection($products);
         }
+        // else {
+        //     return response()->json([
+        //         'message' => 'No Record Available'
+        //     ], 200);
+        // }
+
+        return view('admin.products', compact('products'));
     }
 
     public function store(Request $request)
@@ -45,15 +49,22 @@ class ProductController extends Controller
             'stock' => $request->stock,
         ]);
 
-        return response()->json([
-            'message' => 'Product Created Successfully',
-            'data' => new ProductResource($product)
-        ], 200);
+        // return response()->json([
+        //     'message' => 'Product Created Successfully',
+        //     'data' => new ProductResource($product)
+        // ], 200);
+
+        return redirect('/admin/products');
     }
 
     public function show(Product $product)
     {
         return new ProductResource($product);
+    }
+
+    public function edit(Product $product)
+    {
+        return view('admin.edit.products', compact('product'));
     }
 
     public function update(Request $request, Product $product)
@@ -79,17 +90,21 @@ class ProductController extends Controller
             'stock' => $request->stock,
         ]);
 
-        return response()->json([
-            'message' => 'Product Updated Successfully',
-            'data' => new ProductResource($product)
-        ], 200);
+        // return response()->json([
+        //     'message' => 'Product Updated Successfully',
+        //     'data' => new ProductResource($product)
+        // ], 200);
+
+        return redirect('/admin/products')->with('success', 'Product Updated Successfully');
     }
 
     public function destroy(Product $product)
     {
         $product->delete();
-        return response()->json([
-            'message' => 'Product Deleted Successfully'
-        ], 200);
+        // return response()->json([
+        //     'message' => 'Product Deleted Successfully'
+        // ], 200);
+
+        return redirect('/admin/products');
     }
 }

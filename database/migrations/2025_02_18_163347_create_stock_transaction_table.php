@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('stock_transaction', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
+            $table->foreignId('product_id')->constrained('product')->onDelete('cascade');
             $table->enum('transaction_type', ['in', 'out']);
             $table->integer('quantity');
-            $table->foreignId('supplier_id')->nullable()->constrained('suppliers')->onDelete('set null');
-            $table->foreignId('customer_id')->nullable()->constrained('customers')->onDelete('set null');
+            $table->foreignId('supplier_id')->nullable()->constrained('supplier')->onDelete('set null');
+            $table->foreignId('customer_id')->nullable()->constrained('customer')->onDelete('set null');
             $table->timestamps();
         });
     }

@@ -14,7 +14,7 @@
             <div class="col-md-6 d-flex align-items-center justify-content-center p-4">
                 <div class="w-100" style="max-width: 400px;">
                     <h3 class="text-center fw-bold mb-3">Login</h3>
-                    <form id="loginForm" action="{{ route('login') }}" method="POST">
+                    <form id="loginForm" action="{{ route('api.login') }}" method="POST">
                         @csrf
                         <div class="mb-3">
                             <label class="form-label">Email</label>
@@ -74,7 +74,7 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    window.location.href = data.redirect;
+                    window.location.href = '/admin/dashboard';
                 } else {
                     alert('Login failed: ' + data.message);
                 }

@@ -10,11 +10,6 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function showLogin()
-    {
-        return view('auth.login');
-    }
-
     public function login(Request $request): JsonResponse
     {
         $credentials = $request->validate([
@@ -37,11 +32,6 @@ class AuthController extends Controller
             'token_type' => 'Bearer',
             'token' => $token,
         ], 200);
-    }
-
-    public function showRegister()
-    {
-        return view('auth.register');
     }
 
     public function register(Request $request): JsonResponse
@@ -98,8 +88,8 @@ class AuthController extends Controller
             ], 200);
         } else {
             return response()->json([
-                'message' => 'User not found.'
-            ], 404);
+                'message' => 'User not.'
+            ], 400);
         }
     }
 }
