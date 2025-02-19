@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\StockTransactionResource;
 use App\Models\Customer;
 use App\Models\Product;
+use App\Models\Purchase;
 use App\Models\StockTransaction;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
@@ -15,13 +16,11 @@ class StockTransactionController extends Controller
 {
     public function index()
     {
-        $transactions = StockTransaction::with(['product', 'supplier', 'customer'])->latest()->get();
+        $transactions = StockTransaction::all();
+        $purchasesExist = Purchase::exists();
+        $customersExist = Customer::exists();
 
-        // if ($transactions->isEmpty()) {
-        //     return response()->json(['message' => 'No Record Available'], 200);
-        // }
-
-        return view('admin.transaction', compact('transactions'));
+        return view('admin.transaction', compact('transactions',  'purchasesExist', 'customersExist'));
     }
 
     public function store(Request $request)
@@ -34,27 +33,31 @@ class StockTransactionController extends Controller
             'customer_id' => 'nullable|exists:customer,id',
         ]);
 
+        $validator->sometimes('supplier_id', 'required', function ($input) {
+            return $input->transaction_type == 'in';
+        });
+
+        $validator->sometimes('customer_id', 'required', function ($input) {
+            return $input->transaction_type == 'out';
+        });
+
         if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Validation Error',
-                'error' => $validator->errors()
-            ], 422);
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $product = Product::find($request->product_id);
+
+        if ($request->transaction_type == 'out' && $product->stock < $request->quantity) {
+            return redirect()->back()->withErrors(['quantity' => 'Insufficient stock for this transaction'])->withInput();
         }
 
         StockTransaction::create($request->all());
 
         if ($request->transaction_type == 'in') {
-            $product = Product::find($request->product_id);
             $product->increment('stock', $request->quantity);
         } else {
-            $product = Product::find($request->product_id);
             $product->decrement('stock', $request->quantity);
         }
-
-        // return response()->json([
-        //     'message' => 'Stock Transaction Created Successfully',
-        //     'data' => new StockTransactionResource($transaction)
-        // ], 201);
 
         return redirect('/admin/transaction')->with('success', 'Stock Transaction Created Successfully');
     }
@@ -63,7 +66,6 @@ class StockTransactionController extends Controller
     {
         return new StockTransactionResource($stockTransaction);
     }
-
 
     public function create()
     {

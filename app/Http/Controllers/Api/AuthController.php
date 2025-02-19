@@ -28,11 +28,11 @@ class AuthController extends Controller
         ]);
     }
 
-    public function register(Request $request): JsonResponse
+    public function register(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email|max:255',
+            'email' => 'required|email|unique:user,email|max:255',
             'password' => 'required|string|min:8|max:255',
         ]);
 
@@ -40,21 +40,14 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => 'user',
         ]);
 
         if ($user) {
-            Auth::login($user);
-            
-            return response()->json([
-                'success' => true,
-                'message' => 'Registration successful'
-            ], 201);
+            return redirect('/login')->with('success', 'Registration successful');
         }
 
-        return response()->json([
-            'success' => false,
-            'message' => 'Registration failed'
-        ], 400);
+        return back()->withErrors(['email' => 'Registration failed']);
     }
 
     public function profile(Request $request): JsonResponse

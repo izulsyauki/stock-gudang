@@ -10,30 +10,42 @@
         </div>
     </nav>
     <div class="container">
-        <a href="{{ route('transaction.create') }}" class="btn btn-primary mb-3">Add New Transaction</a>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Product</th>
-                    <th>Transaction Type</th>
-                    <th>Quantity</th>
-                    <th>Supplier</th>
-                    <th>Customer</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($transactions as $transaction)
+        @if (!$purchasesExist || !$customersExist)
+            <div class="alert alert-warning">
+                You must add at least one purchase, and one customer before adding a new transaction.
+            </div>
+        @endif
+        <a href="{{ route('transaction.create') }}" class="btn btn-primary mb-3"
+            @if (!$purchasesExist || !$customersExist) hidden @endif>Add New Transaction</a>
+        @if ($transactions->isEmpty())
+            <div class="w-50 mx-auto">
+                <img src="{{ asset('images/no-data-image.png') }}" class="img-fluid" alt="No data found">
+            </div>
+        @else
+            <table class="table table-bordered">
+                <thead>
                     <tr>
-                        <td>{{ $transaction->id }}</td>
-                        <td>{{ $transaction->product->name }}</td>
-                        <td>{{ ucfirst($transaction->transaction_type) }}</td>
-                        <td>{{ $transaction->quantity }}</td>
-                        <td>{{ $transaction->supplier->name ?? 'N/A' }}</td>
-                        <td>{{ $transaction->customer->name ?? 'N/A' }}</td>
+                        <th>ID</th>
+                        <th>Product</th>
+                        <th>Transaction Type</th>
+                        <th>Quantity</th>
+                        <th>Supplier</th>
+                        <th>Customer</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach ($transactions as $transaction)
+                        <tr>
+                            <td>{{ $transaction->id }}</td>
+                            <td>{{ $transaction->product->name }}</td>
+                            <td>{{ ucfirst($transaction->transaction_type) }}</td>
+                            <td>{{ $transaction->quantity }}</td>
+                            <td>{{ $transaction->supplier->name ?? 'N/A' }}</td>
+                            <td>{{ $transaction->customer->name ?? 'N/A' }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endif
     </div>
 @endsection

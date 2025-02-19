@@ -42,12 +42,7 @@ class CustomerController extends Controller
             ], 422);
         }
 
-        $customer = Customer::create($request->all());
-
-        // return response()->json([
-        //     'message' => 'Customer Created Successfully',
-        //     'data' => new CustomerResource($customer)
-        // ], 201);
+        Customer::create($request->all());
 
         return redirect('/admin/customers')->with('success', 'Customer Created Successfully');
     }
@@ -60,6 +55,11 @@ class CustomerController extends Controller
     public function create()
     {
         return view('admin.add.customers');
+    }
+
+    public function edit(Customer $customer)
+    {
+        return view('admin.edit.customers',  compact('customer'));
     }
 
     public function update(Request $request, Customer $customer)
@@ -80,18 +80,13 @@ class CustomerController extends Controller
 
         $customer->update($request->all());
 
-        return response()->json([
-            'message' => 'Customer Updated Successfully',
-            'data' => new CustomerResource($customer)
-        ], 200);
+        return redirect('/admin/customers')->with('success', 'Customer Updated Successfully');
     }
 
     public function destroy(Customer $customer)
     {
         $customer->delete();
 
-        return response()->json([
-            'message' => 'Customer Deleted Successfully'
-        ], 200);
+        return redirect('/admin/customers')->with('success', 'Customer Deleted Successfully');
     }
 }

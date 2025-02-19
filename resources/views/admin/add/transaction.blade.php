@@ -73,7 +73,7 @@
                     <option value="" selected disabled>Select Customer</option>
                     @foreach ($customers as $customer)
                         <option value="{{ $customer->id }}" {{ old('customer_id') == $customer->id ? 'selected' : '' }}>
-                            {{ $customer->user->name }}
+                            {{ $customer->name }}
                         </option>
                     @endforeach
                 </select>

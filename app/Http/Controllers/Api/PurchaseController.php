@@ -14,21 +14,11 @@ class PurchaseController extends Controller
 {
     public function index()
     {
-        $purchases = Purchase::with(['supplier', 'product'])->get();
+        $purchases = Purchase::all();
+        $productsExist = Product::exists();
+        $suppliersExist = Supplier::exists();
 
-        // if ($purchases->count() > 0) {
-        //     return PurchaseResource::collection($purchases);
-        // } else {
-        //     return response()->json([
-        //         'message' => 'No Record Available'
-        //     ], 200);
-        // }
-
-        if ($purchases->count() > 0) {
-            return view('admin.purchases', ['purchases' => $purchases]);
-        } else {
-            return view('admin.purchases', ['purchases' => []]);
-        }
+        return view('admin.purchases', compact('purchases', 'productsExist', 'suppliersExist'));
     }
 
     public function create()
@@ -71,7 +61,7 @@ class PurchaseController extends Controller
     {
         $purchase->delete();
 
-        
+
 
         // return response()->json([
         //     'message' => 'Purchase Deleted Successfully'

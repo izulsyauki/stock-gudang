@@ -14,19 +14,31 @@
             <div class="col-md-4 mb-3">
                 <div class="card shadow-sm p-3">
                     <h5><i class="fas fa-truck text-primary"></i> Total Suppliers</h5>
-                    <p class="fw-bold text-primary">120</p>
+                    <p class="fw-bold text-primary">{{ $suppliers }}</p>
                 </div>
             </div>
             <div class="col-md-4 mb-3">
                 <div class="card shadow-sm p-3">
-                    <h5><i class="fas fa-exchange-alt text-success"></i> Stock Transactions</h5>
-                    <p class="fw-bold text-success">350</p>
+                    <h5><i class="fas fa-exchange-alt text-success"></i> Total Transactions</h5>
+                    <p class="fw-bold text-success">{{ $stock_transactions }}</p>
                 </div>
             </div>
             <div class="col-md-4 mb-3">
                 <div class="card shadow-sm p-3">
                     <h5><i class="fas fa-shopping-cart text-danger"></i> Purchases</h5>
-                    <p class="fw-bold text-danger">50</p>
+                    <p class="fw-bold text-danger">{{ $purchases }}</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card shadow-sm p-3">
+                    <h5><i class="fas fa-box text-warning"></i> Total Products</h5>
+                    <p class="fw-bold text-warning">{{ $products }}</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card shadow-sm p-3">
+                    <h5><i class="fas fa-users text-info"></i> Total Customers</h5>
+                    <p class="fw-bold text-info">{{ $customers }}</p>
                 </div>
             </div>
         </div>

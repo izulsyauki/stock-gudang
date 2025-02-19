@@ -42,19 +42,12 @@ class SupplierController extends Controller
             ], 422);
         }
 
-        dd($request->all());
-
-        $supplier = Supplier::create([
+        Supplier::create([
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
             'address' => $request->address,
         ]);
-
-        // return response()->json([
-        //     'message' => 'Supplier Created Successfully',
-        //     'data' => new SupplierResource($supplier)
-        // ], 200);
 
         return redirect('/admin/supplier');
     }
