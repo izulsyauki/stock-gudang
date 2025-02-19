@@ -29,10 +29,6 @@ Route::prefix('admin')->group(function () {
 
     Route::resource('/supplier', SupplierController::class);
 
-    Route::get('/transaction', function () {
-        return view('admin.transaction');
-    })->name('admin.transaction');
-
     Route::get('/transaction/add', function () {
         return view('admin.add.transaction');
     })->name('admin.add.transaction');
