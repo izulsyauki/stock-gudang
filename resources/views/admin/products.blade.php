@@ -10,7 +10,7 @@
         </div>
     </nav>
     <div class="container">
-        <button class="btn btn-primary mb-3">Add New Product</button>
+        <a href="{{ route('admin.add.products') }}" class="btn btn-primary mb-3">Add New Supplier</a>
         <table class="table table-bordered">
             <thead>
                 <tr>

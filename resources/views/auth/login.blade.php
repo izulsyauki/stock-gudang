@@ -14,7 +14,7 @@
             <div class="col-md-6 d-flex align-items-center justify-content-center p-4">
                 <div class="w-100" style="max-width: 400px;">
                     <h3 class="text-center fw-bold mb-3">Login</h3>
-                    <form action="{{ route('login') }}" method="POST">
+                    <form id="loginForm" action="{{ route('login') }}" method="POST">
                         @csrf
                         <div class="mb-3">
                             <label class="form-label">Email</label>
@@ -34,7 +34,6 @@
                             Don't have an account? <a href="{{ route('register') }}">Register</a>
                         </p>
                     </form>
-
                 </div>
             </div>
         </div>
@@ -56,6 +55,34 @@
                 icon.classList.remove('fa-eye-slash');
                 icon.classList.add('fa-eye');
             }
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            const url = this.action;
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'Accept': 'application/json',
+                },
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = data.redirect;
+                } else {
+                    alert('Login failed: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
         });
     </script>
 @endpush

@@ -3,7 +3,6 @@
 @section('title', 'Purchases')
 @section('page_title', 'Purchases')
 
-
 @section('content')
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm py-3 mb-4">
         <div class="container-fluid">
@@ -11,23 +10,29 @@
         </div>
     </nav>
     <div class="container">
-        <h2 class="mb-4">Purchases</h2>
-        <button class="btn btn-primary mb-3">Add New Purchase</button>
+        <a href="{{ route('admin.add.products') }}" class="btn btn-primary mb-3">Add New Purchase</a>
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Purchase ID</th>
+                    <th>ID</th>
                     <th>Supplier</th>
-                    <th>Total Amount</th>
-                    <th>Status</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>PUR-001</td>
+                    <td>1</td>
                     <td>PT. Sukses Jaya</td>
+                    <td>Product A</td>
+                    <td>10</td>
                     <td>$500</td>
-                    <td><span class="badge bg-warning">Pending</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-warning">Edit</button>
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                    </td>
                 </tr>
             </tbody>
         </table>

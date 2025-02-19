@@ -3,7 +3,8 @@
 @section('content')
     <div class="container mt-4">
         <h2>Add Supplier</h2>
-        <form action="{{ route('admin.supplier.store') }}" method="POST">
+        {{-- <form action="{{ route('admin.supplier.store') }}" method="POST"> --}}
+        <form action="#" method="POST">
             @csrf
             <div class="mb-3">
                 <label for="name" class="form-label">Supplier Name</label>
@@ -41,7 +42,9 @@
                 @enderror
             </div>
 
-            <button type="submit" class="btn btn-primary">Add Supplier</button>
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary">Add Supplier</button>
+            </div>
         </form>
     </div>
 @endsection

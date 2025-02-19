@@ -19,6 +19,8 @@ class StockTransactionResource extends JsonResource
             "product_id" => $this->product_id,
             "transaction_type" => $this->transaction_type,
             "quantity" => $this->quantity,
+            "supplier_id" => $this->supplier_id,
+            "customer_id" => $this->customer_id,
             "created_at" => $this->created_at,
         ];
     }

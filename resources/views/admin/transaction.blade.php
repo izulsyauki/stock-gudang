@@ -10,24 +10,31 @@
         </div>
     </nav>
     <div class="container">
-        <button class="btn btn-primary mb-3">Add Stock Transaction</button>
-        <table class="table table-bordered rounded-xl">
+        <a href="{{ route('admin.add.transaction') }}" class="btn btn-primary mb-3">Add New Transaction</a>
+        <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Product</th>
+                    <th>Transaction Type</th>
                     <th>Quantity</th>
-                    <th>Type</th>
-                    <th>Date</th>
+                    <th>Supplier</th>
+                    <th>Customer</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>1</td>
                     <td>Product A</td>
-                    <td>50</td>
-                    <td><span class="badge bg-success">In</span></td>
-                    <td>2025-02-18</td>
+                    <td>In</td>
+                    <td>20</td>
+                    <td>PT. Sukses Jaya</td>
+                    <td>John Doe</td>
+                    <td>
+                        <button class="btn btn-sm btn-warning">Edit</button>
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
