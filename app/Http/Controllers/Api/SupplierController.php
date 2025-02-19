@@ -40,11 +40,18 @@ class SupplierController extends Controller
         return redirect('/admin/supplier')->with('success', 'Supplier Created Successfully');
     }
 
+    public function create()
+    {
+        return view('admin.add.supplier');
+    }
+
     public function show($id)
     {
         $supplier = $this->supplierService->getSupplierById($id);
         return new SupplierResource($supplier);
     }
+
+
 
     public function edit($id)
     {

@@ -50,6 +50,16 @@ class AuthController extends Controller
         return back()->withErrors('error', 'Registration failed');
     }
 
+    public function viewLogin()
+    {
+        return view('auth.login');
+    }
+
+    public function viewRegister()
+    {
+        return view('auth.register');
+    }
+
     public function profile(Request $request): JsonResponse
     {
         if ($request->user()) {
@@ -69,7 +79,7 @@ class AuthController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        
+
         return redirect('/login');
     }
 }

@@ -210,6 +210,16 @@
                 showConfirmButton: false
             });
         @endif
+
+        @if(session('error'))
+            Swal.fire({
+                icon: 'error',
+                title: 'error!',
+                text: "{{ session('error') }}",
+                timer: 3000,
+                showConfirmButton: false
+            });
+        @endif
     </script>
 
     <!-- Custom Script -->

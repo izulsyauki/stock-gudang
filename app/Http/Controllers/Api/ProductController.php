@@ -40,6 +40,11 @@ class ProductController extends Controller
         return redirect('/admin/products')->with('success', 'Product created successfully!');
     }
 
+    public function create()
+    {
+        return view('admin.add.products');
+    }
+
     public function show($id)
     {
         $product = $this->productService->getProductById($id);
