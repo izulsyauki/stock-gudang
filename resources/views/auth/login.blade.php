@@ -3,14 +3,11 @@
 @section('content')
     <div class="container vh-100 d-flex align-items-center justify-content-center">
         <div class="row w-100 shadow-lg rounded-4 overflow-hidden">
-            <!-- Bagian Kiri (Logo + Ilustrasi) -->
-            <div
-                class="col-md-6 d-none d-md-flex flex-column align-items-center justify-content-center bg-primary text-white">
+            <div class="col-md-6 d-none d-md-flex flex-column align-items-center justify-content-center bg-primary text-white">
                 <h2 class="fw-bold">Welcome Back!</h2>
                 <p class="text-center">Login to continue and explore amazing features.</p>
             </div>
 
-            <!-- Form Login -->
             <div class="col-md-6 d-flex align-items-center justify-content-center p-4">
                 <div class="w-100" style="max-width: 400px;">
                     <h3 class="text-center fw-bold mb-3">Login</h3>

@@ -10,7 +10,6 @@
                 <select class="form-control @error('supplier_id') is-invalid @enderror" id="supplier_id" name="supplier_id"
                     required>
                     <option value="" selected disabled>Select Supplier</option>
-                    {{-- Loop daftar supplier --}}
                     @foreach ($suppliers as $supplier)
                         <option value="{{ $supplier->id }}" {{ old('supplier_id') == $supplier->id ? 'selected' : '' }}>
                             {{ $supplier->name }}
@@ -27,7 +26,6 @@
                 <select class="form-control @error('product_id') is-invalid @enderror" id="product_id" name="product_id"
                     required>
                     <option value="" selected disabled>Select Product</option>
-                    {{-- Loop daftar produk --}}
                     @foreach ($products as $product)
                         <option value="{{ $product->id }}" data-price="{{ $product->price }}"
                             {{ old('product_id') == $product->id ? 'selected' : '' }}>
@@ -58,7 +56,6 @@
                 @enderror
             </div>
 
-            {{-- Tombol submit di ujung kanan --}}
             <div class="d-flex justify-content-end">
                 <button type="submit" class="btn btn-primary">Add Purchase</button>
             </div>

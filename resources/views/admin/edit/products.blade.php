@@ -42,7 +42,6 @@
                 @enderror
             </div>
 
-            {{-- Tombol submit di ujung kanan --}}
             <div class="d-flex justify-content-end">
                 <button type="submit" class="btn btn-primary">Update Product</button>
             </div>

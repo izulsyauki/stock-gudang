@@ -8,13 +8,10 @@
 
     <link rel="icon" href="{{ asset('favicon.png') }}" type="image/png" />
 
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- Add SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
     <style>
@@ -23,7 +20,6 @@
             min-height: 100vh;
         }
 
-        /* Sidebar */
         .sidebar {
             width: 250px;
             background: #343a40;
@@ -53,7 +49,6 @@
             background: #007bff;
         }
 
-        /* Content utama */
         .content {
             margin-left: 250px;
             padding: 20px;
@@ -62,7 +57,6 @@
             width: calc(100% - 250px);
         }
 
-        /* Tombol toggle */
         .menu-btn {
             position: fixed;
             top: 20px;
@@ -76,7 +70,6 @@
             display: none;
         }
 
-        /* Tombol close di sidebar */
         .close-btn {
             display: none;
             position: absolute;
@@ -86,7 +79,6 @@
             cursor: pointer;
         }
 
-        /* Mode Mobile */
         @media (max-width: 768px) {
             .sidebar {
                 transform: translateX(-100%);
@@ -148,12 +140,10 @@
 
 <body>
 
-    <!-- Tombol untuk membuka Sidebar -->
     <button class="menu-btn" id="toggleSidebar">
         <i class="fas fa-bars"></i>
     </button>
 
-    <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <span class="close-btn" id="closeSidebar">&times;</span>
         <h4 class="text-center m-2 p-2">Admin Panel</h4>
@@ -173,7 +163,6 @@
             class="{{ request()->routeIs('customers.index*') ? 'active' : '' }}"><i class="fas fa-users me-2"></i>
             Customers</a>
 
-        <!-- Add user info and logout at bottom -->
         <div class="sidebar-bottom">
             <div class="user-email">
                 <i class="fas fa-user me-2"></i>
@@ -188,20 +177,16 @@
         </div>
     </div>
 
-    <!-- Content -->
     <div class="content" id="mainContent">
 
         @yield('content')
 
     </div>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Add SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!-- Add Success Message Handler -->
     <script>
         @if (session('success'))
             Swal.fire({
@@ -224,7 +209,6 @@
         @endif
     </script>
 
-    <!-- Custom Script -->
     <script>
         document.getElementById('toggleSidebar').addEventListener('click', function() {
             document.getElementById('sidebar').classList.add('show');
@@ -234,7 +218,6 @@
             document.getElementById('sidebar').classList.remove('show');
         });
 
-        // Klik di luar sidebar untuk menutup di mode mobile
         document.addEventListener('click', function(event) {
             const sidebar = document.getElementById('sidebar');
             const toggleButton = document.getElementById('toggleSidebar');
