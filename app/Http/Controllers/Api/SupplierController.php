@@ -37,7 +37,7 @@ class SupplierController extends Controller
             ], 422);
         }
 
-        return redirect('/admin/supplier');
+        return redirect('/admin/supplier')->with('success', 'Supplier Created Successfully');
     }
 
     public function show($id)

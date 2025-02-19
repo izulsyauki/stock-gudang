@@ -19,6 +19,9 @@
                         <div class="mb-3">
                             <label class="form-label">Email</label>
                             <input type="email" class="form-control" name="email" required>
+                            @if ($errors->has('email'))
+                                <div class="text-danger">{{ $errors->first('email') }}</div>
+                            @endif
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Password</label>
@@ -28,6 +31,9 @@
                                     <i class="fa-solid fa-eye"></i>
                                 </span>
                             </div>
+                            @if ($errors->has('password'))
+                                <div class="text-danger">{{ $errors->first('password') }}</div>
+                            @endif
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Login</button>
                         <p class="text-center mt-3">

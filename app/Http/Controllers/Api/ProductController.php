@@ -37,7 +37,7 @@ class ProductController extends Controller
             ], 422);
         }
 
-        return redirect('/admin/products');
+        return redirect('/admin/products')->with('success', 'Product created successfully!');
     }
 
     public function show($id)
@@ -69,6 +69,6 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $this->productService->deleteProduct($id);
-        return redirect('/admin/products');
+        return redirect('/admin/products')->with('success', 'Product Deleted Successfully');
     }
 }

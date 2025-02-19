@@ -20,6 +20,7 @@
         @if ($purchases->isEmpty())
             <div class="w-50 mx-auto">
                 <img src="{{ asset('images/no-data-image.png') }}" class="img-fluid" alt="No data found">
+                <h4 class="text-center ">No data found</h4>
             </div>
         @else
             <table class="table table-bordered">

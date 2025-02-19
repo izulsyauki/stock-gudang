@@ -18,19 +18,28 @@
                         @csrf
                         <div class="mb-3">
                             <label class="form-label">Name</label>
-                            <input type="text" class="form-control" name="name" required>
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required>
+                            @error('name')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Email</label>
-                            <input type="email" class="form-control" name="email" required>
+                            <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required>
+                            @error('email')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Password</label>
                             <div class="input-group">
-                                <input type="password" class="form-control" name="password" id="password" required>
+                                <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="password" required>
                                 <span class="input-group-text" id="togglePassword" style="cursor: pointer">
                                     <i class="fa-solid fa-eye"></i>
                                 </span>
+                                @error('password')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Register</button>

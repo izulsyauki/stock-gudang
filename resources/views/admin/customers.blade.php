@@ -12,8 +12,9 @@
     <div class="container">
         <a href="{{ route('customers.create') }}" class="btn btn-primary mb-3">Add New Customer</a>
         @if ($customers->isEmpty())
-            <div class="w-50 mx-auto">
+            <div class="w-40 mx-auto">
                 <img src="{{ asset('images/no-data-image.png') }}" class="img-fluid" alt="No data found">
+                <h4 class="text-center ">No data found</h4>
             </div>
         @else
             <table class="table table-bordered">

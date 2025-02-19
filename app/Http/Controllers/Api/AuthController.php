@@ -47,7 +47,7 @@ class AuthController extends Controller
             return redirect('/login')->with('success', 'Registration successful');
         }
 
-        return back()->withErrors(['email' => 'Registration failed']);
+        return back()->withErrors('error', 'Registration failed');
     }
 
     public function profile(Request $request): JsonResponse
