@@ -10,7 +10,7 @@
         </div>
     </nav>
     <div class="container">
-        <button class="btn btn-primary mb-3">Add New Customer</button>
+        <a href="{{ route('admin.add.customers') }}" class="btn btn-primary mb-3">Add New Customer</a>
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -23,17 +23,19 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>John Doe</td>
-                    <td>johndoe@example.com</td>
-                    <td>+62 812-3456-7890</td>
-                    <td>Jl. Sudirman No. 12, Jakarta</td>
-                    <td>
-                        <button class="btn btn-sm btn-warning">Edit</button>
-                        <button class="btn btn-sm btn-danger">Delete</button>
-                    </td>
-                </tr>
+                @foreach($customers as $customer)
+                    <tr>
+                        <td>{{ $customer->id }}</td>
+                        <td>{{ $customer->name }}</td>
+                        <td>{{ $customer->email }}</td>
+                        <td>{{ $customer->phone }}</td>
+                        <td>{{ $customer->address }}</td>
+                        <td>
+                            <button class="btn btn-sm btn-warning">Edit</button>
+                            <button class="btn btn-sm btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

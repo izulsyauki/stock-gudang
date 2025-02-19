@@ -15,12 +15,15 @@ class CustomerController extends Controller
         $customers = Customer::latest()->get();
 
         if ($customers->count() > 0) {
-            return CustomerResource::collection($customers);
-        } else {
-            return response()->json([
-                'message' => 'No Record Available'
-            ], 200);
+            $customers = CustomerResource::collection($customers);
         }
+        // else {
+        //     return response()->json([
+        //         'message' => 'No Record Available'
+        //     ], 200);
+        // }
+
+        return view('admin.customers', compact('customers'));
     }
 
     public function store(Request $request)

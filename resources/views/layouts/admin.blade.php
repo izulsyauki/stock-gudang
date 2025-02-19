@@ -132,8 +132,8 @@
         <a href="{{ route('transaction.index') }}"
             class="{{ request()->routeIs('transaction.index*') ? 'active' : '' }}"><i
                 class="fas fa-exchange-alt me-2"></i> Stock Transaction</a>
-        <a href="{{ route('admin.customers') }}"
-            class="{{ request()->routeIs('admin.customers*') ? 'active' : '' }}"><i class="fas fa-users me-2"></i>
+        <a href="{{ route('customers.index') }}"
+            class="{{ request()->routeIs('customers.index*') ? 'active' : '' }}"><i class="fas fa-users me-2"></i>
             Customers</a>
     </div>
 
