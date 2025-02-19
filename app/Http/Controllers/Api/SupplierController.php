@@ -3,104 +3,72 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ProductResource;
 use App\Http\Resources\SupplierResource;
-use App\Models\Supplier;
-use Illuminate\Support\Facades\Validator;
+use App\Services\SupplierService;
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller
 {
+    protected $supplierService;
+
+    public function __construct(SupplierService $supplierService)
+    {
+        $this->supplierService = $supplierService;
+    }
+
     public function index()
     {
-        $suppliers = Supplier::get();
+        $suppliers = $this->supplierService->getAllSuppliers();
         if ($suppliers->count() > 0) {
             $suppliers = SupplierResource::collection($suppliers);
         }
-        // else {
-        //     return response()->json([
-        //         'message' => 'No Record Available'
-        //     ], 200);
-        // }
 
         return view('admin.supplier', compact('suppliers'));
     }
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'phone' => 'required|string',
-            'address' => 'nullable',
-        ]);
+        $result = $this->supplierService->createSupplier($request->all());
 
-        if ($validator->fails()) {
+        if (isset($result['errors'])) {
             return response()->json([
                 'message' => "All fields are required",
-                'error' => $validator->errors()
+                'error' => $result['errors']
             ], 422);
         }
-
-        Supplier::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'address' => $request->address,
-        ]);
 
         return redirect('/admin/supplier');
     }
 
-    public function show(Supplier $supplier)
+    public function show($id)
     {
-        return new SupplierResource($supplier);;
+        $supplier = $this->supplierService->getSupplierById($id);
+        return new SupplierResource($supplier);
     }
 
-    public function edit(Supplier $supplier)
+    public function edit($id)
     {
+        $supplier = $this->supplierService->getSupplierById($id);
         return view('admin.edit.supplier', compact('supplier'));
     }
 
-    public function update(Request $request, Supplier $supplier)
+    public function update(Request $request, $id)
     {
+        $result = $this->supplierService->updateSupplier($id, $request->all());
 
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'phone' => 'required|string',
-            'address' => 'nullable',
-        ]);
-
-        if ($validator->fails()) {
+        if (isset($result['errors'])) {
             return response()->json([
                 'message' => "All fields are required",
-                'error' => $validator->errors()
+                'error' => $result['errors']
             ], 422);
         }
-
-        $supplier->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'address' => $request->address,
-        ]);
-
-        // return response()->json([
-        //     'message' => 'Supplier Updated Successfully',
-        //     'data' => new SupplierResource($supplier)
-        // ], 200);
 
         return redirect('/admin/supplier')->with('success', 'Supplier Updated Successfully');
     }
 
-    public function destroy(Supplier $supplier)
+    public function destroy($id)
     {
-        $supplier->delete();
-        // return response()->json([
-        //     'message' => 'Product Deleted Successfully'
-        // ], 200);
-
+        $this->supplierService->deleteSupplier($id);
         return redirect('/admin/supplier')->with('success', 'Supplier Deleted Successfully');
     }
 }
