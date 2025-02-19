@@ -7,38 +7,32 @@ use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function login(Request $request): JsonResponse
+    public function login(Request $request)
     {
         $credentials = $request->validate([
             'email' => 'required|email|max:255',
             'password' => 'required|string|min:8|max:255',
         ]);
 
-        $user = User::where('email', $request->email)->first();
-
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json([
-                'message' => 'The provided credentials are incorrect.'
-            ], 401);
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->intended('/admin/dashboard');
         }
 
-        $token = $user->createToken($user->name . 'Auth-Token')->plainTextToken;
-
-        return response()->json([
-            'message' => 'Login successfully.',
-            'token_type' => 'Bearer',
-            'token' => $token,
-        ], 200);
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ]);
     }
 
     public function register(Request $request): JsonResponse
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:user,email|max:255',
+            'email' => 'required|email|unique:users,email|max:255',
             'password' => 'required|string|min:8|max:255',
         ]);
 
@@ -49,18 +43,18 @@ class AuthController extends Controller
         ]);
 
         if ($user) {
-            $token = $user->createToken($user->name . 'Auth-Token')->plainTextToken;
-
+            Auth::login($user);
+            
             return response()->json([
-                'message' => 'Registration successfully.',
-                'token_type' => 'Bearer',
-                'token' => $token,
+                'success' => true,
+                'message' => 'Registration successful'
             ], 201);
-        } else {
-            return response()->json([
-                'message' => 'Registration failed.'
-            ], 400);
         }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Registration failed'
+        ], 400);
     }
 
     public function profile(Request $request): JsonResponse
@@ -77,19 +71,12 @@ class AuthController extends Controller
         }
     }
 
-    public function logout(Request $request): JsonResponse
+    public function logout(Request $request)
     {
-        $user = User::where('id', $request->user()->id)->first();
-
-        if ($user) {
-            $user->tokens()->delete();
-            return response()->json([
-                'message' => 'Logout successfully.'
-            ], 200);
-        } else {
-            return response()->json([
-                'message' => 'User not.'
-            ], 400);
-        }
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        
+        return redirect('/login');
     }
 }

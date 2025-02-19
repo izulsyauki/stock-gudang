@@ -106,6 +106,35 @@
                 transform: translateX(0);
             }
         }
+
+        .sidebar-bottom {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .user-email {
+            color: white;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            word-break: break-all;
+        }
+
+        .logout-btn {
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            color: inherit;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
     </style>
 </head>
 
@@ -135,6 +164,20 @@
         <a href="{{ route('customers.index') }}"
             class="{{ request()->routeIs('customers.index*') ? 'active' : '' }}"><i class="fas fa-users me-2"></i>
             Customers</a>
+
+        <!-- Add user info and logout at bottom -->
+        <div class="sidebar-bottom">
+            <div class="user-email">
+                <i class="fas fa-user me-2"></i>
+                {{ Auth::user()->email }}
+            </div>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="logout-btn">
+                    <i class="fas fa-sign-out-alt me-2"></i> Logout
+                </button>
+            </form>
+        </div>
     </div>
 
     <!-- Content -->
