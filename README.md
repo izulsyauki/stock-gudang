@@ -41,7 +41,17 @@ This is a stock management system built with the Laravel framework. It provides 
 
 ### 🗄️ Database Setup
 
-1. **Configure the database connection:**
+1. **Create the database in MySQL:**
+
+    Open your MySQL client and run the following command to create a new database:
+
+    ```sql
+    CREATE DATABASE stock_gudang;
+    ```
+
+    You can replace `stock_gudang` with your preferred database name.
+
+2. **Configure the database connection:**
 
     Open the [`.env`](.env) file and update the following variables with your database credentials:
 
@@ -49,18 +59,20 @@ This is a stock management system built with the Laravel framework. It provides 
     DB_CONNECTION=mysql
     DB_HOST=127.0.0.1
     DB_PORT=3306
-    DB_DATABASE=laravel
+    DB_DATABASE=stock_gudang
     DB_USERNAME=root
     DB_PASSWORD=
     ```
 
-2. **Run the database migrations:**
+    Make sure that the `DB_DATABASE` value matches the name of the database you created in the previous step.
+
+3. **Run the database migrations:**
 
     ```sh
     php artisan migrate
     ```
 
-3. **Seed the database:**
+4. **Seed the database:**
 
     The project includes a database seeder to create an initial admin user. To run the seeder, use the following command:
 
