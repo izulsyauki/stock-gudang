@@ -19,10 +19,7 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        $products = $this->productService->getAllProducts(['order' => 'desc', 'search' => $search]);
-        if ($products->count() > 0) {
-            $products = ProductResource::collection($products);
-        }
+        $products = $this->productService->getAllProductsPaginated(['order' => 'desc', 'search' => $search], 10);
 
         return view('admin.products.index', compact('products', 'search'));
     }

@@ -20,16 +20,20 @@
                 @if (!$purchasesExist || !$customersExist) hidden @endif>Add New Transaction</a>
             <div class="d-flex">
                 <form action="{{ route('transaction.index') }}" method="GET" class="d-flex">
-                    <input type="text" name="search" class="form-control me-2" placeholder="Search transactions" value="{{ $search ?? '' }}">
+                    <input type="text" name="search" class="form-control me-2" placeholder="Search transactions"
+                        value="{{ $search ?? '' }}">
                     <button type="submit" class="btn btn-outline-secondary">Search</button>
                 </form>
                 <a href="{{ route('transaction.index') }}" class="btn btn-dark ms-2">Show All</a>
             </div>
         </div>
         @if ($transactions->isEmpty())
-            <div class="w-50 mx-auto">
+            <div class="w-25 mx-auto">
                 <img src="{{ asset('images/no-data-image.png') }}" class="img-fluid" alt="No data found">
-                <h4 class="text-center ">No data found</h4>
+                <div class="text-center">
+                    <h4>No data found</h4>
+                    <p>Sorry we can't find any data</p>
+                </div>
             </div>
         @else
             <table class="table table-bordered">
@@ -62,6 +66,9 @@
                     @endforeach
                 </tbody>
             </table>
+            <div class="d-flex justify-content-center mt-3">
+                {{ $transactions->links('pagination::bootstrap-5') }}
+            </div>
         @endif
     </div>
 @endsection

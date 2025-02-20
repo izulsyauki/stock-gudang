@@ -39,6 +39,29 @@ class StockTransactionService
         return $query->get();
     }
 
+    public function getAllTransactionsPaginated($options = [], $perPage = 10)
+    {
+        $query = StockTransaction::query();
+
+        if (isset($options['search']) && !empty($options['search'])) {
+            $query->whereHas('product', function ($q) use ($options) {
+                $q->where('name', 'like', '%' . $options['search'] . '%');
+            })->orWhereHas('supplier', function ($q) use ($options) {
+                $q->where('name', 'like', '%' . $options['search'] . '%');
+            })->orWhereHas('customer', function ($q) use ($options) {
+                $q->where('name', 'like', '%' . $options['search'] . '%');
+            });
+        }
+
+        if (isset($options['order']) && $options['order'] === 'desc') {
+            $query->orderBy('created_at', 'desc');
+        } else {
+            $query->orderBy('created_at', 'asc');
+        }
+
+        return $query->paginate($perPage);
+    }
+
     public function createTransaction(array $data)
     {
         $validator = Validator::make($data, [

@@ -19,11 +19,7 @@ class CustomerController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        $customers = $this->customerService->getAllCustomers(['order' => 'desc', 'search' => $search]);
-
-        if ($customers->count() > 0) {
-            $customers = CustomerResource::collection($customers);
-        }
+        $customers = $this->customerService->getAllCustomersPaginated(['order' => 'desc', 'search' => $search], 10);
 
         return view('admin.customers.index', compact('customers', 'search'));
     }

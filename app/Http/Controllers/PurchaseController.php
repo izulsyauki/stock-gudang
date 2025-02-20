@@ -21,7 +21,7 @@ class PurchaseController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        $purchases = $this->purchaseService->getAllPurchases(['order' => 'desc', 'search' => $search]);
+        $purchases = $this->purchaseService->getAllPurchasesPaginated(['order' => 'desc', 'search' => $search], 10);
         $productsExist = Product::exists();
         $suppliersExist = Supplier::exists();
 

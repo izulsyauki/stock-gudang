@@ -20,16 +20,20 @@
                 @if (!$productsExist || !$suppliersExist) hidden @endif>Add New Purchase</a>
             <div class="d-flex">
                 <form action="{{ route('purchases.index') }}" method="GET" class="d-flex">
-                    <input type="text" name="search" class="form-control me-2" placeholder="Search purchases" value="{{ $search ?? '' }}">
+                    <input type="text" name="search" class="form-control me-2" placeholder="Search purchases"
+                        value="{{ $search ?? '' }}">
                     <button type="submit" class="btn btn-outline-dark">Search</button>
                 </form>
                 <a href="{{ route('purchases.index') }}" class="btn btn-dark ms-2">Show All</a>
             </div>
         </div>
         @if ($purchases->isEmpty())
-            <div class="w-50 mx-auto">
+            <div class="w-25 mx-auto">
                 <img src="{{ asset('images/no-data-image.png') }}" class="img-fluid" alt="No data found">
-                <h4 class="text-center ">No data found</h4>
+                <div class="text-center">
+                    <h4>No data found</h4>
+                    <p>Sorry we can't find any data</p>
+                </div>
             </div>
         @else
             <table class="table table-bordered">
@@ -44,7 +48,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($purchases as $purchase)
+                    @foreach ($purchases as $purchase)
                         <tr>
                             <td>{{ $purchase->id }}</td>
                             <td>{{ $purchase->supplier->name }}</td>
@@ -61,13 +65,12 @@
                                 </form>
                             </td>
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="6" class="text-center">No purchases found</td>
-                        </tr>
-                    @endforelse
+                    @endforeach
                 </tbody>
             </table>
+            <div class="d-flex justify-content-center mt-3">
+                {{ $purchases->links('pagination::bootstrap-5') }}
+            </div>
         @endif
     </div>
 @endsection

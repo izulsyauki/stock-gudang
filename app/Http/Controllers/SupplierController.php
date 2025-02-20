@@ -19,10 +19,7 @@ class SupplierController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        $suppliers = $this->supplierService->getAllSuppliers(['order' => 'desc', 'search' => $search]);
-        if ($suppliers->count() > 0) {
-            $suppliers = SupplierResource::collection($suppliers);
-        }
+        $suppliers = $this->supplierService->getAllSuppliersPaginated(['order' => 'desc', 'search' => $search], 10);
 
         return view('admin.suppliers.index', compact('suppliers', 'search'));
     }

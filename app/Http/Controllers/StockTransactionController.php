@@ -23,7 +23,7 @@ class StockTransactionController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        $transactions = $this->stockTransactionService->getAllTransactions(['order' => 'desc', 'search' => $search]);
+        $transactions = $this->stockTransactionService->getAllTransactionsPaginated(['order' => 'desc', 'search' => $search], 10);
         $purchasesExist = Purchase::exists();
         $customersExist = Customer::exists();
 

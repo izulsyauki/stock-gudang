@@ -14,16 +14,20 @@
             <a href="{{ route('admin.products.create') }}" class="btn btn-primary">Add New Product</a>
             <div class="d-flex">
                 <form action="{{ route('products.index') }}" method="GET" class="d-flex">
-                    <input type="text" name="search" class="form-control me-2" placeholder="Search products" value="{{ $search ?? '' }}">
+                    <input type="text" name="search" class="form-control me-2" placeholder="Search products"
+                        value="{{ $search ?? '' }}">
                     <button type="submit" class="btn btn-outline-dark ">Search</button>
                 </form>
                 <a href="{{ route('products.index') }}" class="btn btn-dark ms-2">Show All</a>
             </div>
         </div>
         @if ($products->isEmpty())
-            <div class="w-50 mx-auto">
+            <div class="w-25 mx-auto">
                 <img src="{{ asset('images/no-data-image.png') }}" class="img-fluid" alt="No data found">
-                <h4 class="text-center ">No data found</h4>
+                <div class="text-center">
+                    <h4>No data found</h4>
+                    <p>Sorry we can't find any data</p>
+                </div>
             </div>
         @else
             <table class="table table-bordered">
@@ -58,5 +62,8 @@
                 </tbody>
             </table>
         @endif
+        <div class="d-flex justify-content-center">
+            {{ $products->links('pagination::bootstrap-5') }}
+        </div>
     </div>
 @endsection

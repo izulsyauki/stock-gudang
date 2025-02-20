@@ -32,6 +32,23 @@ class ProductService
         return $query->get();
     }
 
+    public function getAllProductsPaginated($options = [], $perPage = 10)
+    {
+        $query = Product::query();
+
+        if (isset($options['search']) && !empty($options['search'])) {
+            $query->where('name', 'like', '%' . $options['search'] . '%');
+        }
+
+        if (isset($options['order']) && $options['order'] === 'desc') {
+            $query->orderBy('created_at', 'desc');
+        } else {
+            $query->orderBy('created_at', 'asc');
+        }
+
+        return $query->paginate($perPage);
+    }
+
     public function createProduct(array $data)
     {
         $validator = Validator::make($data, [
