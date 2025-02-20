@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Customer;
 use App\Repository\CustomerRepository;
 use Illuminate\Support\Facades\Validator;
 
@@ -14,9 +15,21 @@ class CustomerService
         $this->customerRepository = $customerRepository;
     }
 
-    public function getAllCustomers()
+    public function getAllCustomers($options = [])
     {
-        return $this->customerRepository->getAll();
+        $query = Customer::query();
+
+        if (isset($options['search']) && !empty($options['search'])) {
+            $query->where('name', 'like', '%' . $options['search'] . '%');
+        }
+
+        if (isset($options['order']) && $options['order'] === 'desc') {
+            $query->orderBy('created_at', 'desc');
+        } else {
+            $query->orderBy('created_at', 'asc');
+        }
+
+        return $query->get();
     }
 
     public function createCustomer(array $data)

@@ -20,13 +20,14 @@ class StockTransactionController extends Controller
         $this->stockTransactionService = $stockTransactionService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $transactions = $this->stockTransactionService->getAllTransactions();
+        $search = $request->input('search');
+        $transactions = $this->stockTransactionService->getAllTransactions(['order' => 'desc', 'search' => $search]);
         $purchasesExist = Purchase::exists();
         $customersExist = Customer::exists();
 
-        return view('admin.transaction', compact('transactions', 'purchasesExist', 'customersExist'));
+        return view('admin.stock_transactions.index', compact('transactions', 'purchasesExist', 'customersExist', 'search'));
     }
 
     public function store(Request $request)
@@ -51,6 +52,6 @@ class StockTransactionController extends Controller
         $products = Product::all();
         $suppliers = Supplier::all();
         $customers = Customer::all();
-        return view('admin.add.transaction', compact('products', 'suppliers', 'customers'));
+        return view('admin.stock_transactions.create', compact('products', 'suppliers', 'customers'));
     }
 }

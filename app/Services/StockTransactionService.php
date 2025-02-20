@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repository\StockTransactionRepository;
 use App\Models\Product;
+use App\Models\StockTransaction;
 use Illuminate\Support\Facades\Validator;
 
 class StockTransactionService
@@ -15,9 +16,27 @@ class StockTransactionService
         $this->stockTransactionRepository = $stockTransactionRepository;
     }
 
-    public function getAllTransactions()
+    public function getAllTransactions($options = [])
     {
-        return $this->stockTransactionRepository->getAll();
+        $query = StockTransaction::query();
+
+        if (isset($options['search']) && !empty($options['search'])) {
+            $query->whereHas('product', function ($q) use ($options) {
+                $q->where('name', 'like', '%' . $options['search'] . '%');
+            })->orWhereHas('supplier', function ($q) use ($options) {
+                $q->where('name', 'like', '%' . $options['search'] . '%');
+            })->orWhereHas('customer', function ($q) use ($options) {
+                $q->where('name', 'like', '%' . $options['search'] . '%');
+            });
+        }
+
+        if (isset($options['order']) && $options['order'] === 'desc') {
+            $query->orderBy('created_at', 'desc');
+        } else {
+            $query->orderBy('created_at', 'asc');
+        }
+
+        return $query->get();
     }
 
     public function createTransaction(array $data)

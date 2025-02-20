@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Supplier;
 use App\Repository\SupplierRepository;
 use Illuminate\Support\Facades\Validator;
 
@@ -14,9 +15,21 @@ class SupplierService
         $this->supplierRepository = $supplierRepository;
     }
 
-    public function getAllSuppliers()
+    public function getAllSuppliers($options = [])
     {
-        return $this->supplierRepository->getAll();
+        $query = Supplier::query();
+
+        if (isset($options['search']) && !empty($options['search'])) {
+            $query->where('name', 'like', '%' . $options['search'] . '%');
+        }
+
+        if (isset($options['order']) && $options['order'] === 'desc') {
+            $query->orderBy('created_at', 'desc');
+        } else {
+            $query->orderBy('created_at', 'asc');
+        }
+
+        return $query->get();
     }
 
     public function createSupplier(array $data)

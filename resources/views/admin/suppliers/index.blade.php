@@ -10,7 +10,16 @@
         </div>
     </nav>
     <div class="container">
-        <a href="{{ route('admin.add.supplier') }}" class="btn btn-primary mb-3">Add New Supplier</a>
+        <div class="d-flex justify-content-between mb-3">
+            <a href="{{ route('admin.suppliers.create') }}" class="btn btn-primary">Add New Supplier</a>
+            <div class="d-flex">
+                <form action="{{ route('supplier.index') }}" method="GET" class="d-flex">
+                    <input type="text" name="search" class="form-control me-2" placeholder="Search suppliers" value="{{ $search ?? '' }}">
+                    <button type="submit" class="btn btn-outline-dark">Search</button>
+                </form>
+                <a href="{{ route('supplier.index') }}" class="btn btn-dark ms-2">Show All</a>
+            </div>
+        </div>
         @if ($suppliers->isEmpty())
             <div class="w-50 mx-auto">
                 <img src="{{ asset('images/no-data-image.png') }}" class="img-fluid" alt="No data found">

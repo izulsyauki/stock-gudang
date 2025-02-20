@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Product;
 use App\Repository\ProductRepository;
 use Illuminate\Support\Facades\Validator;
 
@@ -14,9 +15,21 @@ class ProductService
         $this->productRepository = $productRepository;
     }
 
-    public function getAllProducts()
+    public function getAllProducts($options = [])
     {
-        return $this->productRepository->getAll();
+        $query = Product::query();
+
+        if (isset($options['search']) && !empty($options['search'])) {
+            $query->where('name', 'like', '%' . $options['search'] . '%');
+        }
+
+        if (isset($options['order']) && $options['order'] === 'desc') {
+            $query->orderBy('created_at', 'desc');
+        } else {
+            $query->orderBy('created_at', 'asc');
+        }
+
+        return $query->get();
     }
 
     public function createProduct(array $data)

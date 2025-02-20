@@ -15,8 +15,17 @@
                 You must add at least one purchase, and one customer before adding a new transaction.
             </div>
         @endif
-        <a href="{{ route('transaction.create') }}" class="btn btn-primary mb-3"
-            @if (!$purchasesExist || !$customersExist) hidden @endif>Add New Transaction</a>
+        <div class="d-flex justify-content-between mb-3">
+            <a href="{{ route('transaction.create') }}" class="btn btn-primary"
+                @if (!$purchasesExist || !$customersExist) hidden @endif>Add New Transaction</a>
+            <div class="d-flex">
+                <form action="{{ route('transaction.index') }}" method="GET" class="d-flex">
+                    <input type="text" name="search" class="form-control me-2" placeholder="Search transactions" value="{{ $search ?? '' }}">
+                    <button type="submit" class="btn btn-outline-secondary">Search</button>
+                </form>
+                <a href="{{ route('transaction.index') }}" class="btn btn-dark ms-2">Show All</a>
+            </div>
+        </div>
         @if ($transactions->isEmpty())
             <div class="w-50 mx-auto">
                 <img src="{{ asset('images/no-data-image.png') }}" class="img-fluid" alt="No data found">

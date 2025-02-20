@@ -18,20 +18,21 @@ class PurchaseController extends Controller
         $this->purchaseService = $purchaseService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $purchases = $this->purchaseService->getAllPurchases();
+        $search = $request->input('search');
+        $purchases = $this->purchaseService->getAllPurchases(['order' => 'desc', 'search' => $search]);
         $productsExist = Product::exists();
         $suppliersExist = Supplier::exists();
 
-        return view('admin.purchases', compact('purchases', 'productsExist', 'suppliersExist'));
+        return view('admin.purchases.index', compact('purchases', 'productsExist', 'suppliersExist', 'search'));
     }
 
     public function create()
     {
         $products = Product::get();
         $suppliers = Supplier::get();
-        return view('admin.add.purchases', compact('products', 'suppliers'));
+        return view('admin.purchases.create', compact('products', 'suppliers'));
     }
 
     public function store(Request $request)

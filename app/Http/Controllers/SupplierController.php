@@ -16,14 +16,15 @@ class SupplierController extends Controller
         $this->supplierService = $supplierService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $suppliers = $this->supplierService->getAllSuppliers();
+        $search = $request->input('search');
+        $suppliers = $this->supplierService->getAllSuppliers(['order' => 'desc', 'search' => $search]);
         if ($suppliers->count() > 0) {
             $suppliers = SupplierResource::collection($suppliers);
         }
 
-        return view('admin.supplier', compact('suppliers'));
+        return view('admin.suppliers.index', compact('suppliers', 'search'));
     }
 
     public function store(Request $request)
@@ -42,7 +43,7 @@ class SupplierController extends Controller
 
     public function create()
     {
-        return view('admin.add.supplier');
+        return view('admin.suppliers.create');
     }
 
     public function show($id)
@@ -56,7 +57,7 @@ class SupplierController extends Controller
     public function edit($id)
     {
         $supplier = $this->supplierService->getSupplierById($id);
-        return view('admin.edit.supplier', compact('supplier'));
+        return view('admin.suppliers.edit', compact('supplier'));
     }
 
     public function update(Request $request, $id)

@@ -16,15 +16,16 @@ class CustomerController extends Controller
         $this->customerService = $customerService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $customers = $this->customerService->getAllCustomers();
+        $search = $request->input('search');
+        $customers = $this->customerService->getAllCustomers(['order' => 'desc', 'search' => $search]);
 
         if ($customers->count() > 0) {
             $customers = CustomerResource::collection($customers);
         }
 
-        return view('admin.customers', compact('customers'));
+        return view('admin.customers.index', compact('customers', 'search'));
     }
 
     public function store(Request $request)
@@ -49,13 +50,13 @@ class CustomerController extends Controller
 
     public function create()
     {
-        return view('admin.add.customers');
+        return view('admin.customers.create');
     }
 
     public function edit($id)
     {
         $customer = $this->customerService->getCustomerById($id);
-        return view('admin.edit.customers', compact('customer'));
+        return view('admin.customers.edit', compact('customer'));
     }
 
     public function update(Request $request, $id)

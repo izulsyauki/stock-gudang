@@ -25,13 +25,13 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
     Route::middleware(['is_admin'])->group(function () {
-        Route::get('/products/add', [ProductController::class, 'create'])->name('admin.add.products');
+        Route::get('/products/add', [ProductController::class, 'create'])->name('admin.products.create');
         Route::post('/products', [ProductController::class, 'store'])->name('products.store');
         Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
         Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
         Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 
-        Route::get('/supplier/add', [SupplierController::class, 'create'])->name('admin.add.supplier');
+        Route::get('/supplier/add', [SupplierController::class, 'create'])->name('admin.suppliers.create');
         Route::post('/supplier', [SupplierController::class, 'store'])->name('supplier.store');
         Route::get('/supplier/{supplier}/edit', [SupplierController::class, 'edit'])->name('supplier.edit');
         Route::put('/supplier/{supplier}', [SupplierController::class, 'update'])->name('supplier.update');

@@ -15,8 +15,17 @@
                 You must add at least one product and one supplier before adding a new purchase.
             </div>
         @endif
-        <a href="{{ route('purchases.create') }}" class="btn btn-primary mb-3"
-            @if (!$productsExist || !$suppliersExist) hidden @endif>Add New Purchase</a>
+        <div class="d-flex justify-content-between mb-3">
+            <a href="{{ route('purchases.create') }}" class="btn btn-primary"
+                @if (!$productsExist || !$suppliersExist) hidden @endif>Add New Purchase</a>
+            <div class="d-flex">
+                <form action="{{ route('purchases.index') }}" method="GET" class="d-flex">
+                    <input type="text" name="search" class="form-control me-2" placeholder="Search purchases" value="{{ $search ?? '' }}">
+                    <button type="submit" class="btn btn-outline-dark">Search</button>
+                </form>
+                <a href="{{ route('purchases.index') }}" class="btn btn-dark ms-2">Show All</a>
+            </div>
+        </div>
         @if ($purchases->isEmpty())
             <div class="w-50 mx-auto">
                 <img src="{{ asset('images/no-data-image.png') }}" class="img-fluid" alt="No data found">

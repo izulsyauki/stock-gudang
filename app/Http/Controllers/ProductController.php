@@ -16,14 +16,15 @@ class ProductController extends Controller
         $this->productService = $productService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $products = $this->productService->getAllProducts();
+        $search = $request->input('search');
+        $products = $this->productService->getAllProducts(['order' => 'desc', 'search' => $search]);
         if ($products->count() > 0) {
             $products = ProductResource::collection($products);
         }
 
-        return view('admin.products', compact('products'));
+        return view('admin.products.index', compact('products', 'search'));
     }
 
     public function store(Request $request)
@@ -42,7 +43,7 @@ class ProductController extends Controller
 
     public function create()
     {
-        return view('admin.add.products');
+        return view('admin.products.create');
     }
 
     public function show($id)
@@ -54,7 +55,7 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = $this->productService->getProductById($id);
-        return view('admin.edit.products', compact('product'));
+        return view('admin.products.edit', compact('product'));
     }
 
     public function update(Request $request, $id)
