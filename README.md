@@ -14,8 +14,8 @@ This is a stock management system built with the Laravel framework. It provides 
 1. **Clone the repository:**
 
     ```sh
-    git clone https://github.com/your-repo/laravel-stock-management.git
-    cd laravel-stock-management
+    git clone https://github.com/izulsyauki/stock-gudang.git
+    cd stock-gudang
     ```
 
 2. **Install PHP dependencies:**
