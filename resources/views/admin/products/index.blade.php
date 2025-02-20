@@ -35,6 +35,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Product Name</th>
+                        <th>Description</th>
                         <th>Stock</th>
                         <th>Price</th>
                         <th>Actions</th>
@@ -45,10 +46,12 @@
                         <tr>
                             <td>{{ $product->id }}</td>
                             <td>{{ $product->name }}</td>
+                            <td style="max-width: 200px; overflow-x: auto;">{{ $product->description }}</td>
                             <td>{{ $product->stock }}</td>
                             <td>Rp. {{ $product->price }}</td>
                             <td>
-                                <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="{{ route('products.edit', $product->id) }}"
+                                    class="btn btn-warning btn-sm">Edit</a>
                                 <form action="{{ route('products.destroy', $product->id) }}" method="POST"
                                     style="display:inline-block;"
                                     onsubmit="return confirm('Are you sure you want to delete this product?');">

@@ -36,6 +36,7 @@
                         <th>ID</th>
                         <th>Supplier Name</th>
                         <th>Contact</th>
+                        <th>Address</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -45,6 +46,7 @@
                             <td>{{ $supplier->id }}</td>
                             <td>{{ $supplier->name }}</td>
                             <td>{{ $supplier->phone }}</td>
+                            <td style="max-width: 200px; overflow-x: auto;">{{ $supplier->address }}</td>
                             <td>
                                 <a href="{{ route('supplier.edit', $supplier->id) }}"
                                     class="btn btn-warning btn-sm">Edit</a>
