@@ -14,7 +14,7 @@ This is a stock management system built with the Laravel framework. It provides 
 1. **Clone the repository:**
 
     ```sh
-    git clone https://github.com/izulsyauki/stock-gudang.git
+    git clone https://github.com/izulsyauki/stock_management.git
     cd stock-gudang
     ```
 
@@ -46,10 +46,10 @@ This is a stock management system built with the Laravel framework. It provides 
     Open your MySQL client and run the following command to create a new database:
 
     ```sql
-    CREATE DATABASE stock_gudang;
+    CREATE DATABASE stock_management;
     ```
 
-    You can replace `stock_gudang` with your preferred database name.
+    You can replace `stock_management` with your preferred database name.
 
 2. **Configure the database connection:**
 
@@ -59,7 +59,7 @@ This is a stock management system built with the Laravel framework. It provides 
     DB_CONNECTION=mysql
     DB_HOST=127.0.0.1
     DB_PORT=3306
-    DB_DATABASE=stock_gudang
+    DB_DATABASE=stock_management
     DB_USERNAME=root
     DB_PASSWORD=
     ```
